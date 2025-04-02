@@ -33,3 +33,11 @@ Pasos de instalacion del proyecto
 - pytest
 - pserve development.ini
 
+## Iniciar Frontend
+- npm i
+- npm start
+
+## Instalación del Frontend
+- npx create-react-app frontend
+- npm i axios react-router-dom
+- npm start
