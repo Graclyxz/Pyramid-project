@@ -2,7 +2,8 @@
 Aplicacion web con varias tecnologias python: Backend>Pyramid, SQLalchymist y PostgreSQL; Frontend> React
 
 ## Iniciar Backend
-- 
+- initialize_backend_db development.ini
+- pserve development.ini
 
 ## Instalación del Backend
 Pasos de instalacion del proyecto
@@ -39,5 +40,6 @@ Pasos de instalacion del proyecto
 
 ## Instalación del Frontend
 - npx create-react-app frontend
+- cd frontend
 - npm i axios react-router-dom
 - npm start
