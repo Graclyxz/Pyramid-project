@@ -1,0 +1,40 @@
+-- Crear base de datos
+CREATE DATABASE pyramid_project;
+\c pyramid_project -- Conectarse a la base de datos
+
+-- Tabla Usuario
+CREATE TABLE Usuario (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password TEXT NOT NULL, -- Guarda el hash aquí
+    direccion TEXT,
+    telefono VARCHAR(20),
+    es_admin BOOLEAN DEFAULT FALSE
+);
+
+-- Tabla Producto
+CREATE TABLE Producto (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    marca VARCHAR(100),
+    descripcion TEXT,
+    precio NUMERIC(10,2) NOT NULL,
+    cant_dis INT DEFAULT 0,
+    categoria VARCHAR(100),
+    imagen TEXT
+);
+
+-- Tabla Pedidos
+CREATE TABLE Pedidos (
+    id SERIAL PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    total NUMERIC(10,2) NOT NULL,
+    estado VARCHAR(50) DEFAULT 'pendiente',
+    fecha_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_usuario
+      FOREIGN KEY(usuario_id) 
+      REFERENCES Usuario(id)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
+);

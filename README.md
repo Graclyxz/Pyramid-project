@@ -7,7 +7,7 @@ Aplicacion web con varias tecnologias python: Backend>Pyramid, SQLalchymist y Po
    - Usuario
      - id (int)
      - nombre (str)
-     - email (unique)
+     - email [unique] (str)
      - password [hash] (str)
      - direccion (str)
      - telefono (str)
@@ -17,15 +17,16 @@ Aplicacion web con varias tecnologias python: Backend>Pyramid, SQLalchymist y Po
      - nombre (str)
      - marca (str)
      - desc (str)
-     - precio (fload)
+     - precio (float)
      - cant_dis (int)
      - categoria (str)
      - imagen (str)
-   - Carrito
-     - id
-     - usuario_id
-     - producto_id
-     - cantidad 
+   - Pedidos
+     - id (int)
+     - usuario_id (int)
+     - total (float)
+     - estado (str)
+     - fecha_pedido (datatime)
 
 
 2. Componentes para la arquitectura del proyecto.
@@ -41,9 +42,9 @@ Aplicacion web con varias tecnologias python: Backend>Pyramid, SQLalchymist y Po
          - ver
          - editar
          - eliminar
-     - Carrito
-       - Añadir al carrito
-       - Quitar productos del carrito
+     - Pedidos
+       - Crear Pedido
+       - Cancelar Pedido
    - DataBase
      - Usuario
      - Producto
