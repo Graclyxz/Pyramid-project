@@ -1,6 +1,6 @@
 -- Crear base de datos
-CREATE DATABASE pyramid_project;
-\c pyramid_project -- Conectarse a la base de datos
+CREATE DATABASE pyramid-project;
+\c pyramid-project -- Conectarse a la base de datos
 
 -- Tabla Usuario
 CREATE TABLE Usuario (

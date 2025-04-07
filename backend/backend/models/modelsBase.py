@@ -9,13 +9,12 @@ from sqlalchemy import (
     DateTime,
     Numeric,
 )
-from sqlalchemy.orm import relationship, declarative_base
+from .meta import Base
+from sqlalchemy.orm import relationship
 from datetime import datetime
 
-Base = declarative_base()
-
 class Usuario(Base):
-    __tablename__ = 'Usuario'
+    __tablename__ = 'usuario'
 
     id = Column(Integer, primary_key=True)
     nombre = Column(String(100), nullable=False)
@@ -28,7 +27,7 @@ class Usuario(Base):
     pedidos = relationship("Pedidos", back_populates="usuario", cascade="all, delete")
 
 class Producto(Base):
-    __tablename__ = 'Producto'
+    __tablename__ = 'producto'
 
     id = Column(Integer, primary_key=True)
     nombre = Column(String(100), nullable=False)
@@ -40,10 +39,10 @@ class Producto(Base):
     imagen = Column(Text)
 
 class Pedidos(Base):
-    __tablename__ = 'Pedidos'
+    __tablename__ = 'pedidos'
 
     id = Column(Integer, primary_key=True)
-    usuario_id = Column(Integer, ForeignKey('Usuario.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
+    usuario_id = Column(Integer, ForeignKey('usuario.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
     total = Column(Numeric(10, 2), nullable=False)
     estado = Column(String(50), default='pendiente')
     fecha_pedido = Column(DateTime, default=datetime.utcnow)
