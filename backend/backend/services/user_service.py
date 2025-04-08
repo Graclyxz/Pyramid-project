@@ -1,7 +1,7 @@
 from sqlalchemy.exc import SQLAlchemyError
 from ..models.modelsBase import Usuario
 
-class UsuarioService:
+class UserService:
     def __init__(self, dbsession):
         self.dbsession = dbsession
 
