@@ -20,4 +20,10 @@ def includeme(config):
     config.add_route('actualizar_pedido', '/update/pedidos/{id}')
     config.add_route('eliminar_pedido', '/delete/pedidos/{id}')
 
+    config.add_route('listar_detalles_pedido', '/detalles_pedido')
+    config.add_route('obtener_detalle_pedido', '/detalles_pedido/{id}')
+    config.add_route('crear_detalle_pedido', '/create/detalles_pedido')
+    config.add_route('actualizar_detalle_pedido', '/update/detalles_pedido/{id}')
+    config.add_route('eliminar_detalle_pedido', '/delete/detalles_pedido/{id}')
+
     config.add_route('test_db_connection', '/test-db-connection')  # Nueva ruta
