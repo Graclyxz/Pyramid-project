@@ -3,7 +3,6 @@ from sqlalchemy import (
     Integer,
     String,
     Boolean,
-    Float,
     Text,
     ForeignKey,
     DateTime,
@@ -48,3 +47,16 @@ class Pedidos(Base):
     fecha_pedido = Column(DateTime, default=datetime.utcnow)
 
     usuario = relationship("Usuario", back_populates="pedidos")
+    detalles = relationship("DetallePedido", back_populates="pedido", cascade="all, delete")
+
+class DetallePedido(Base):
+    __tablename__ = 'detallePedido'
+
+    id = Column(Integer, primary_key=True)
+    pedido_id = Column(Integer, ForeignKey('pedidos.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
+    producto_id = Column(Integer, ForeignKey('producto.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
+    cantidad = Column(Integer, nullable=False)
+    precio_unitario = Column(Numeric(10, 2), nullable=False)
+
+    pedido = relationship("Pedidos", back_populates="detalles")
+    producto = relationship("Producto")

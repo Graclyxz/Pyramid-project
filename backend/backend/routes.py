@@ -9,9 +9,15 @@ def includeme(config):
     config.add_route('eliminar_usuario', '/delete/usuarios/{id}')
 
     config.add_route('listar_productos', '/productos')
-    config.add_route('obtener_productos', '/productos/{id}')
-    config.add_route('crear_productos', '/create/productos')
-    config.add_route('actualizar_productos', '/update/productos/{id}')
-    config.add_route('eliminar_productos', '/delete/productos/{id}')
+    config.add_route('obtener_producto', '/productos/{id}')
+    config.add_route('crear_producto', '/create/productos')
+    config.add_route('actualizar_producto', '/update/productos/{id}')
+    config.add_route('eliminar_producto', '/delete/productos/{id}')
+
+    config.add_route('listar_pedidos', '/pedidos')
+    config.add_route('obtener_pedido', '/pedidos/{id}')
+    config.add_route('crear_pedido', '/create/pedidos')
+    config.add_route('actualizar_pedido', '/update/pedidos/{id}')
+    config.add_route('eliminar_pedido', '/delete/pedidos/{id}')
 
     config.add_route('test_db_connection', '/test-db-connection')  # Nueva ruta

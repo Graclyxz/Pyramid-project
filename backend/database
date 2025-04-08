@@ -38,3 +38,22 @@ CREATE TABLE Pedidos (
       ON DELETE CASCADE
       ON UPDATE CASCADE
 );
+
+-- Tabla intermedia DetallePedido
+CREATE TABLE DetallePedido (
+    id SERIAL PRIMARY KEY,
+    pedido_id INT NOT NULL,
+    producto_id INT NOT NULL,
+    cantidad INT NOT NULL,
+    precio_unitario NUMERIC(10, 2) NOT NULL, -- el precio del producto en ese momento
+    CONSTRAINT fk_pedido 
+        FOREIGN KEY (pedido_id) 
+        REFERENCES Pedidos (id) 
+        ON DELETE CASCADE 
+        ON UPDATE CASCADE,
+    CONSTRAINT fk_producto 
+        FOREIGN KEY (producto_id) 
+        REFERENCES Producto (id) 
+        ON DELETE CASCADE 
+        ON UPDATE CASCADE
+);
