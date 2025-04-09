@@ -3,16 +3,17 @@ from pyramid.httpexceptions import HTTPNotFound, HTTPBadRequest, HTTPOk
 
 from .utils.utils import serialize_sqlalchemy_object
 from ..services.order_service import OrderService
+from .utils.auth_middleware import requiere_autenticacion
 
 @view_config(route_name='listar_pedidos', renderer='json', request_method='GET')
+@requiere_autenticacion
 def listar_pedidos(request):
+    usuario_id = request.usuario["id"]
     service = OrderService(request.dbsession)
     pedidos = service.listar_pedidos()
-    
-    # Usa la función auxiliar para serializar cada pedido
-    pedidos_dict = [serialize_sqlalchemy_object(pedido) for pedido in pedidos]
-    
-    return pedidos_dict
+    pedidos_usuario = [pedido for pedido in pedidos if pedido.usuario_id == usuario_id]
+    return [serialize_sqlalchemy_object(pedido) for pedido in pedidos_usuario]
+
 
 @view_config(route_name='obtener_pedido', renderer='json', request_method='GET')
 def obtener_pedidos(request):
@@ -21,10 +22,9 @@ def obtener_pedidos(request):
     pedido = service.obtener_pedido(pedido_id)
     if not pedido:
         return HTTPNotFound(json_body={'error': 'Pedido no encontrado'})
-    
     # Usa la función auxiliar para serializar el pedido
-    pedido_dict = serialize_sqlalchemy_object(pedido)
-    return pedido_dict
+    return serialize_sqlalchemy_object(pedido)
+
 
 @view_config(route_name='crear_pedido', renderer='json', request_method='POST')
 def crear_pedidos(request):
@@ -32,10 +32,8 @@ def crear_pedidos(request):
         data = request.json_body
         service = OrderService(request.dbsession)
         pedido = service.crear_pedido(data)
-        
         # Usa la función auxiliar para serializar el pedido
-        pedido_dict = serialize_sqlalchemy_object(pedido)
-        return pedido_dict
+        return serialize_sqlalchemy_object(pedido)
     except Exception as e:
         return HTTPBadRequest(json_body={'error': str(e)})
     
@@ -49,10 +47,8 @@ def actualizar_pedidos(request):
         pedido = service.actualizar_pedido(pedido_id, data)
         if not pedido:
             return HTTPNotFound(json_body={'error': 'Pedido no encontrado'})
-        
         # Usa la función auxiliar para serializar el pedido
-        pedido_dict = serialize_sqlalchemy_object(pedido)
-        return pedido_dict
+        return serialize_sqlalchemy_object(pedido)
     except Exception as e:
         return HTTPBadRequest(json_body={'error': str(e)})
     
@@ -64,7 +60,6 @@ def eliminar_pedidos(request):
     pedido = service.eliminar_pedido(pedido_id)
     if not pedido:
         return HTTPNotFound(json_body={'error': 'Pedido no encontrado'})
-    
     # Usa la función auxiliar para serializar el pedido
-    pedido_dict = serialize_sqlalchemy_object(pedido)
-    return HTTPOk(json_body={'message': 'Pedido eliminado', 'Pedido': pedido_dict})
+    return HTTPOk(json_body={'message': 'Pedido eliminado', 
+                             'Pedido': serialize_sqlalchemy_object(pedido)})

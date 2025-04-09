@@ -1,11 +1,13 @@
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPNotFound, HTTPBadRequest, HTTPOk
 
+from ..views.utils.auth_middleware import requiere_autenticacion
 from .utils.utils import serialize_sqlalchemy_object
 from ..services.order_detail_service import OrderDetailService
 
 
 @view_config(route_name='listar_detalles_pedido', renderer='json', request_method='GET')
+@requiere_autenticacion
 def listar_detalles_pedido(request):
     service = OrderDetailService(request.dbsession)
     detallepedidos = service.listar_detalles_pedido()
@@ -17,6 +19,7 @@ def listar_detalles_pedido(request):
 
 
 @view_config(route_name='obtener_detalle_pedido', renderer='json', request_method='GET')
+@requiere_autenticacion
 def obtener_detalle_pedido(request):
     detallepedido_id = request.matchdict.get('id')
     service = OrderDetailService(request.dbsession)
@@ -30,6 +33,7 @@ def obtener_detalle_pedido(request):
 
 
 @view_config(route_name='crear_detalle_pedido', renderer='json', request_method='POST')
+@requiere_autenticacion
 def crear_detalle_pedido(request):
     try:
         data = request.json_body
@@ -44,6 +48,7 @@ def crear_detalle_pedido(request):
     
 
 @view_config(route_name='actualizar_detalle_pedido', renderer='json', request_method='PUT')
+@requiere_autenticacion
 def actualizar_detalle_pedido(request):
     detallepedido_id = request.matchdict.get('id')
     try:
@@ -61,6 +66,7 @@ def actualizar_detalle_pedido(request):
     
 
 @view_config(route_name='eliminar_detalle_pedido', renderer='json', request_method='DELETE')
+@requiere_autenticacion
 def eliminar_detalle_pedido(request):
     detallepedido_id = request.matchdict.get('id')
     service = OrderDetailService(request.dbsession)

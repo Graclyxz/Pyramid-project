@@ -26,4 +26,7 @@ def includeme(config):
     config.add_route('actualizar_detalle_pedido', '/update/detalles_pedido/{id}')
     config.add_route('eliminar_detalle_pedido', '/delete/detalles_pedido/{id}')
 
+    config.add_route('login', '/login')
+    config.add_route('logout', '/logout')
+
     config.add_route('test_db_connection', '/test-db-connection')  # Nueva ruta
