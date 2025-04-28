@@ -25,6 +25,7 @@ function Login() {
 
     return (
         <div className="login-container">
+            <title>Pyramid Project | Iniciar Sesión</title>
             <h1>Iniciar Sesión</h1>
             <form onSubmit={handleSubmit} className="login-form">
                 <div className="form-group">

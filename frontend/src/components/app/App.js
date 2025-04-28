@@ -8,6 +8,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
+      <title>Pyramid Project</title>
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>

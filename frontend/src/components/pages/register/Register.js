@@ -42,6 +42,7 @@ function Register() {
 
     return (
         <div className="register-container">
+            <title>Pyramid Project | Crear Cuenta</title>
             <h1>Crear Cuenta</h1>
             <form onSubmit={handleSubmit} className="register-form">
                 <div className="form-group">

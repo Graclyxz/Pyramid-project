@@ -50,7 +50,7 @@ function Footer() {
                 </div>
             </div>
             <div className="footer-bottom">
-                <p>&copy; 2025 Tienda. Todos los derechos reservados.</p>
+                <p>&copy; 2025 Pyramid Project. Todos los derechos reservados.</p>
             </div>
         </footer>
     );
