@@ -24,7 +24,7 @@ function Register() {
         setSuccess('');
 
         try {
-            const response = await axios.post('/api/register', formData);
+            const response = await axios.post('/create/usuarios', formData);
             console.log('Registro exitoso:', response.data);
             setSuccess('Usuario registrado exitosamente.');
             setFormData({

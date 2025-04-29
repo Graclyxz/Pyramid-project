@@ -7,7 +7,7 @@ function Home() {
 
     useEffect(() => {
         // Llama al backend para obtener los productos
-        axios.get('/api/productos') // Cambia esta URL según tu backend
+        axios.get('/productos') // Cambia esta URL según tu backend
             .then(response => {
                 setProductos(response.data);
             })

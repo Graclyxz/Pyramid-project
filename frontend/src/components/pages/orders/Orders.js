@@ -10,7 +10,7 @@ function Orders() {
 
     useEffect(() => {
         // Llama al backend para obtener los pedidos del usuario
-        axios.get('/api/pedidos') // Cambia esta URL según tu backend
+        axios.get('/pedidos') // Cambia esta URL según tu backend
             .then(response => {
                 setPedidos(response.data);
             })

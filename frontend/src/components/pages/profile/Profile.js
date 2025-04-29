@@ -13,8 +13,12 @@ function Profile() {
     const [success, setSuccess] = useState('');
 
     useEffect(() => {
-        // Llama al backend para obtener los datos del usuario
-        axios.get('/api/usuario') // Cambia esta URL según tu backend
+        // Llama al backend para obtener los datos del usuario autenticado
+        axios.get('/usuarios/me', {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`, // Asegúrate de enviar el token
+            },
+        })
             .then(response => {
                 setUserData(response.data);
             })
@@ -35,7 +39,7 @@ function Profile() {
         setSuccess('');
 
         try {
-            const response = await axios.put('/api/usuario', userData); // Cambia esta URL según tu backend
+            const response = await axios.put('/usuarios', userData); // Cambia esta URL según tu backend
             console.log('Datos actualizados:', response.data);
             setSuccess('Datos actualizados exitosamente.');
         } catch (err) {

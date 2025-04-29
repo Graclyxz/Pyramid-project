@@ -18,7 +18,7 @@ function Admin() {
 
     useEffect(() => {
         // Cargar usuarios
-        axios.get('/api/usuarios') // Cambia esta URL según tu backend
+        axios.get('/usuarios') // Cambia esta URL según tu backend
             .then(response => {
                 setUsuarios(response.data);
             })
@@ -39,7 +39,7 @@ function Admin() {
         setSuccess('');
 
         try {
-            const response = await axios.post('/api/productos', nuevoProducto); // Cambia esta URL según tu backend
+            const response = await axios.post('/productos', nuevoProducto); // Cambia esta URL según tu backend
             console.log('Producto creado:', response.data);
             setSuccess('Producto creado exitosamente.');
             setNuevoProducto({

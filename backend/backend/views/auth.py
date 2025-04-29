@@ -3,6 +3,8 @@ from pyramid.httpexceptions import HTTPUnauthorized, HTTPBadRequest, HTTPOk
 from ..services.auth_service import AuthService
 from .utils.token_blacklist import agregar_token_a_blacklist
 from datetime import datetime
+import logging
+log = logging.getLogger(__name__)
 
 @view_config(route_name='login', renderer='json', request_method='POST')
 def login(request):

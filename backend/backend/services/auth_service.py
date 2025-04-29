@@ -2,6 +2,8 @@ import jwt
 import datetime
 from sqlalchemy.exc import SQLAlchemyError
 from ..models.modelsBase import Usuario
+import logging
+log = logging.getLogger(__name__)
 
 SECRET_KEY = "your_secret_key"  # Cambia esto por una clave segura
 
@@ -20,8 +22,10 @@ class AuthService:
             "id": usuario.id,
             "email": usuario.email,
             "es_admin": usuario.es_admin,
-            "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+            "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=24)
         }
+        # En el middleware
+        log.debug(f"Payload del token: {payload}")
         token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
         return token
 
