@@ -17,13 +17,13 @@
     text-align: left;
 }
 
-.profile-form label {
+.profile-form .form-group label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
 }
 
-.profile-form input {
+.profile-form .form-group input {
     width: 95%;
     padding: 10px;
     border: 1px solid #ccc;

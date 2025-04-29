@@ -7,7 +7,7 @@ from .utils.auth_middleware import requiere_autenticacion
 
 @view_config(route_name='listar_pedidos', renderer='json', request_method='GET')
 @requiere_autenticacion
-def listar_pedidos(request):
+def listar_pedidos(context, request):
     usuario_id = request.usuario["id"]
     service = OrderService(request.dbsession)
     pedidos = service.listar_pedidos()

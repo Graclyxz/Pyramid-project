@@ -28,7 +28,7 @@ function Home() {
                         <p>{producto.desc}</p>
                         <p><strong>Precio:</strong> ${producto.precio.toFixed(2)}</p>
                         <p><strong>Disponibles:</strong> {producto.cant_dis}</p>
-                        <button className="btn-agregar">Añadir al Carrito</button>
+                        {/*<button className="btn-agregar">Añadir al Carrito</button>*/}
                     </div>
                 ))}
             </div>

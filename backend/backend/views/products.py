@@ -26,7 +26,7 @@ def obtener_productos(request):
 @view_config(route_name='crear_producto', renderer='json', request_method='POST')
 @requiere_autenticacion
 @requiere_admin
-def crear_productos(request):
+def crear_productos(context, request):
     try:
         data = request.json_body
         service = ProductService(request.dbsession)
@@ -39,7 +39,7 @@ def crear_productos(request):
 @view_config(route_name='actualizar_producto', renderer='json', request_method='PUT')
 @requiere_autenticacion
 @requiere_admin
-def actualizar_productos(request):
+def actualizar_productos(context, request):
     producto_id = request.matchdict.get('id')
     try:
         data = request.json_body
@@ -56,7 +56,7 @@ def actualizar_productos(request):
 @view_config(route_name='eliminar_producto', renderer='json', request_method='DELETE')
 @requiere_autenticacion
 @requiere_admin
-def eliminar_productos(request):
+def eliminar_productos(context, request):
     producto_id = request.matchdict.get('id')
     service = ProductService(request.dbsession)
     producto = service.eliminar_producto(producto_id)

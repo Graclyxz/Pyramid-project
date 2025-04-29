@@ -30,3 +30,4 @@ def includeme(config):
     config.add_route('logout', '/logout')
 
     config.add_route('test_db_connection', '/test-db-connection')  # Nueva ruta
+    config.add_route('me', '/me')

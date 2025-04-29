@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate para redirigir
 import axios from 'axios';
 import './Register.css';
 
@@ -11,7 +12,8 @@ function Register() {
         telefono: '',
     });
     const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
+    const [success, setSuccess] = useState(false); // Cambia a booleano para manejar el modal
+    const navigate = useNavigate(); // Hook para redirigir
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -21,12 +23,12 @@ function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
-        setSuccess('');
+        setSuccess(false);
 
         try {
             const response = await axios.post('/create/usuarios', formData);
             console.log('Registro exitoso:', response.data);
-            setSuccess('Usuario registrado exitosamente.');
+            setSuccess(true); // Muestra el modal de éxito
             setFormData({
                 nombre: '',
                 email: '',
@@ -38,6 +40,11 @@ function Register() {
             console.error('Error al registrar usuario:', err);
             setError('Hubo un problema al registrar el usuario. Inténtalo de nuevo.');
         }
+    };
+
+    const handleModalClose = () => {
+        setSuccess(false); // Oculta el modal
+        navigate('/login'); // Redirige al inicio de sesión
     };
 
     return (
@@ -101,9 +108,18 @@ function Register() {
                     />
                 </div>
                 {error && <p className="error-message">{error}</p>}
-                {success && <p className="success-message">{success}</p>}
                 <button type="submit" className="btn-register">Registrarse</button>
             </form>
+
+            {/* Modal de éxito */}
+            {success && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <p>Usuario registrado exitosamente.</p>
+                        <button onClick={handleModalClose} className="btn-ok">OK</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

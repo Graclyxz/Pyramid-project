@@ -14,7 +14,7 @@ function Profile() {
 
     useEffect(() => {
         // Llama al backend para obtener los datos del usuario autenticado
-        axios.get('/usuarios/me', {
+        axios.get('/me', {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`, // Asegúrate de enviar el token
             },
@@ -39,11 +39,20 @@ function Profile() {
         setSuccess('');
 
         try {
-            const response = await axios.put('/usuarios', userData); // Cambia esta URL según tu backend
+            // Obtén el ID del usuario desde los datos actuales
+            const userId = userData.id;
+
+            // Envía la solicitud PUT al backend con la URL correcta y el token
+            const response = await axios.put(`/update/usuarios/${userId}`, userData, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`, // Envía el token JWT
+                },
+            });
+
             console.log('Datos actualizados:', response.data);
             setSuccess('Datos actualizados exitosamente.');
         } catch (err) {
-            console.error('Error al actualizar los datos:', err);
+            console.error('Error al actualizar los datos:', err.response || err);
             setError('Hubo un problema al actualizar los datos. Inténtalo de nuevo.');
         }
     };

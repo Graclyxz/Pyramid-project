@@ -1,6 +1,7 @@
 from pyramid.view import view_config
-from pyramid.httpexceptions import HTTPUnauthorized, HTTPBadRequest, HTTPOk
+from pyramid.httpexceptions import HTTPUnauthorized, HTTPBadRequest, HTTPOk, HTTPNotFound
 from ..services.auth_service import AuthService
+from ..services.user_service import UserService
 from .utils.token_blacklist import agregar_token_a_blacklist
 from datetime import datetime
 import logging
@@ -45,3 +46,38 @@ def logout(request):
         return HTTPOk(json_body={"message": "Sesión cerrada exitosamente"})
     except Exception as e:
         return HTTPUnauthorized(json_body={"error": str(e)})
+
+
+@view_config(route_name='me', renderer='json', request_method='GET')
+def obtener_usuario_actual(request):
+    # Obtén el token del encabezado Authorization
+    auth_header = request.headers.get('Authorization')
+    if not auth_header or not auth_header.startswith('Bearer '):
+        return HTTPUnauthorized(json_body={'error': 'Token no proporcionado o inválido'})
+
+    token = auth_header.split(' ')[1]
+
+    try:
+        # Usa AuthService para verificar y decodificar el token
+        auth_service = AuthService(request.dbsession)
+        payload = auth_service.verificar_token(token)
+        user_id = payload.get('id')
+
+        # Obtén los datos del usuario desde la base de datos
+        user_service = UserService(request.dbsession)
+        user = user_service.obtener_usuario(user_id)
+
+        if not user:
+            return HTTPNotFound(json_body={'error': 'Usuario no encontrado'})
+
+        # Devuelve los datos del usuario
+        return {
+            'id': user.id,
+            'nombre': user.nombre,
+            'email': user.email,
+            'telefono': user.telefono,
+            'direccion': user.direccion,
+            'es_admin': user.es_admin,
+        }
+    except Exception as e:
+        return HTTPUnauthorized(json_body={'error': 'Token inválido o expirado'})

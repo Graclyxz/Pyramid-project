@@ -1,16 +1,14 @@
 import React, { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Header.css';
 import { UserContext } from '../../../context/UserContext'; // Importa el contexto del usuario
 
 function Header() {
     const { user, setUser } = useContext(UserContext); // Obtén el usuario y la función para actualizarlo
-    const navigate = useNavigate();
 
     const handleLogout = () => {
-        // Lógica para cerrar sesión
-        setUser(null); // Limpia el usuario del contexto
-        navigate('/'); // Redirige al inicio
+        localStorage.removeItem('token'); // Elimina el token
+        setUser(null); // Limpia el estado del usuario
     };
 
     return (
@@ -23,7 +21,7 @@ function Header() {
                     {user ? (
                         <>
                             <li>
-                                <Link to="/profile">{user.email}</Link> {/* Muestra el nombre del usuario */}
+                                <Link to="/profile">{user.nombre}</Link> {/* Muestra el nombre del usuario */}
                             </li>
                             <li>
                                 <button onClick={handleLogout} className="btn-logout">Cerrar Sesión</button>

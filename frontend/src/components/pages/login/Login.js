@@ -1,38 +1,47 @@
-import React, { useState, useContext } from 'react'; // Importa useContext
-import axios from 'axios';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './Login.css';
-import { UserContext } from '../../../context/UserContext'; // Importa el contexto del usuario
+import { UserContext } from '../../../context/UserContext';
 
 function Login() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [formData, setFormData] = useState({ email: '', password: '' });
     const [error, setError] = useState('');
-    const navigate = useNavigate();
     const { setUser } = useContext(UserContext); // Obtén la función para actualizar el usuario
+    const navigate = useNavigate();
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
 
         try {
-            const response = await axios.post('/login', { email, password });
-            console.log('Inicio de sesión exitoso:', response.data);
+            // Solicita el token al iniciar sesión
+            const loginResponse = await axios.post('/login', formData);
+            const { token } = loginResponse.data;
 
             // Guarda el token en localStorage
-            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('token', token);
 
-            // Actualiza el contexto del usuario
-            setUser({
-                email: email,
-                nombre: response.data.nombre,
-                es_admin: response.data.es_admin,
+            // Usa el token para obtener los datos del usuario
+            const userResponse = await axios.get('/me', {
+                headers: {
+                    Authorization: `Bearer ${token}`, // Envía el token en los encabezados
+                },
             });
 
-            navigate('/'); // Redirige al usuario
+            // Actualiza el contexto con los datos del usuario
+            setUser(userResponse.data);
+
+            // Redirige al usuario a la página principal
+            navigate('/');
         } catch (err) {
             console.error('Error al iniciar sesión:', err);
-            setError('Credenciales inválidas. Por favor, inténtalo de nuevo.');
+            setError('Credenciales incorrectas o problema al obtener los datos del usuario.');
         }
     };
 
@@ -45,9 +54,11 @@ function Login() {
                     <label htmlFor="email">Correo Electrónico</label>
                     <input
                         type="email"
+                        name="email"
                         id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="Correo electrónico"
                         required
                     />
                 </div>
@@ -55,9 +66,11 @@ function Login() {
                     <label htmlFor="password">Contraseña</label>
                     <input
                         type="password"
+                        name="password"
                         id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={formData.password}
+                        onChange={handleChange}
+                        placeholder="Contraseña"
                         required
                     />
                 </div>

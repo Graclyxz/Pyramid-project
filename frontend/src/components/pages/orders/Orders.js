@@ -22,7 +22,7 @@ function Orders() {
 
     const handleViewDetails = (pedidoId) => {
         // Llama al backend para obtener los detalles del pedido seleccionado
-        axios.get(`/api/pedidos/${pedidoId}/detalles`) // Cambia esta URL según tu backend
+        axios.get(`/pedidos/${pedidoId}`) // Cambia esta URL según tu backend
             .then(response => {
                 setDetalles(response.data);
                 setSelectedPedido(pedidoId);
