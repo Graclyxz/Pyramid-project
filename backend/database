@@ -1,0 +1,59 @@
+-- Crear base de datos
+CREATE DATABASE pyramid-project;
+\c pyramid-project -- Conectarse a la base de datos
+
+-- Tabla Usuario
+CREATE TABLE Usuario (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password TEXT NOT NULL, -- Guarda el hash aquí
+    direccion TEXT,
+    telefono VARCHAR(20),
+    es_admin BOOLEAN DEFAULT FALSE
+);
+
+-- Tabla Producto
+CREATE TABLE Producto (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    marca VARCHAR(100),
+    descripcion TEXT,
+    precio NUMERIC(10,2) NOT NULL,
+    cant_dis INT DEFAULT 0,
+    categoria VARCHAR(100),
+    imagen TEXT
+);
+
+-- Tabla Pedidos
+CREATE TABLE Pedidos (
+    id SERIAL PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    total NUMERIC(10,2) NOT NULL,
+    estado VARCHAR(50) DEFAULT 'pendiente',
+    fecha_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_usuario
+      FOREIGN KEY(usuario_id) 
+      REFERENCES Usuario(id)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
+);
+
+-- Tabla intermedia DetallePedido
+CREATE TABLE DetallePedido (
+    id SERIAL PRIMARY KEY,
+    pedido_id INT NOT NULL,
+    producto_id INT NOT NULL,
+    cantidad INT NOT NULL,
+    precio_unitario NUMERIC(10, 2) NOT NULL, -- el precio del producto en ese momento
+    CONSTRAINT fk_pedido 
+        FOREIGN KEY (pedido_id) 
+        REFERENCES Pedidos (id) 
+        ON DELETE CASCADE 
+        ON UPDATE CASCADE,
+    CONSTRAINT fk_producto 
+        FOREIGN KEY (producto_id) 
+        REFERENCES Producto (id) 
+        ON DELETE CASCADE 
+        ON UPDATE CASCADE
+);
