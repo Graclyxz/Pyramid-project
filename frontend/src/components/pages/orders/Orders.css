@@ -24,6 +24,10 @@
     margin: 5px 0;
 }
 
+.pedido-card button {
+    margin: 2px;
+}
+
 .btn-detalles {
     background-color: #007bff;
     color: white;
@@ -36,6 +40,20 @@
 
 .btn-detalles:hover {
     background-color: #0056b3;
+}
+
+.btn-enviar {
+    background-color: #007209;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn-enviar:hover {
+    background-color: #005011;
 }
 
 .detalles-pedido {
@@ -51,4 +69,118 @@
 .detalles-pedido li {
     border-bottom: 1px solid #ccc;
     padding: 10px 0;
+}
+
+/* Lista de detalles */
+.detalles-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Contenedor del detalle */
+.detalle-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding: 15px 0;
+}
+
+/* Contenido del detalle */
+.detalle-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* Información del producto */
+.detalle-info {
+    flex: 1;
+    text-align: left;
+    /* Alinea el texto a la izquierda */
+    margin-right: 10px;
+}
+
+.detalle-info p {
+    margin: 5px 0;
+    line-height: 1.6;
+    /* Incrementa el espacio entre líneas */
+    font-size: 16px;
+    /* Aumenta el tamaño del texto */
+    color: #333;
+    /* Color del texto */
+}
+
+/* Botón "X" */
+.btn-eliminar {
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn-eliminar:hover {
+    background-color: darkred;
+}
+
+/* Botón eliminar pedido */
+.btn-eliminar-pedido {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+.btn-eliminar-pedido:hover {
+    background-color: #cc0000;
+}
+
+/* Título del modal */
+.modal-content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #444;
+}
+
+/* Total del pedido */
+.modal-content h3 {
+    text-align: center;
+    /* Centra el texto */
+    margin-top: 20px;
+    font-size: 18px;
+    /* Aumenta el tamaño del texto */
+    color: #222;
+    font-weight: bold;
+}
+
+/* Botón cerrar */
+.btn-close-modal {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-close-modal:hover {
+    background-color: #45a049;
 }

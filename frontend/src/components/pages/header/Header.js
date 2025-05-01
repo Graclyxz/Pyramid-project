@@ -1,14 +1,33 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom'; // Importa useNavigate
 import './Header.css';
-import { UserContext } from '../../../context/UserContext'; // Importa el contexto del usuario
+import { UserContext } from '../../../context/UserContext';
+import axios from 'axios';
 
 function Header() {
-    const { user, setUser } = useContext(UserContext); // Obtén el usuario y la función para actualizarlo
+    const { user, setUser } = useContext(UserContext);
+    const [isPedidoPendiente, setisPedidoPendiente] = useState(false);
+    const navigate = useNavigate(); // Inicializa useNavigate
+
+    useEffect(() => {
+        if (user) {
+            axios.get('/pedidos', {
+                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+            })
+                .then(response => {
+                    const pedidosPendientes = response.data.filter(pedido => pedido.estado === 'pendiente');
+                    setisPedidoPendiente(pedidosPendientes.length > 0);
+                })
+                .catch(error => {
+                    console.error('Error al verificar pedidos pendientes:', error);
+                });
+        }
+    }, [user]);
 
     const handleLogout = () => {
-        localStorage.removeItem('token'); // Elimina el token
-        setUser(null); // Limpia el estado del usuario
+        localStorage.removeItem('token');
+        setUser(null);
+        navigate('/'); // Redirige al inicio
     };
 
     return (
@@ -21,7 +40,13 @@ function Header() {
                     {user ? (
                         <>
                             <li>
-                                <Link to="/profile">{user.nombre}</Link> {/* Muestra el nombre del usuario */}
+                                <Link to="/profile">{user.nombre}</Link>
+                            </li>
+                            <li className="nav-item-orders">
+                                <Link to="/orders">
+                                    {isPedidoPendiente && <span className="icon-carrito"></span>}
+                                    Mis Pedidos
+                                </Link>
                             </li>
                             <li>
                                 <button onClick={handleLogout} className="btn-logout">Cerrar Sesión</button>

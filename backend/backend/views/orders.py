@@ -39,7 +39,7 @@ def crear_pedidos(request):
     
 
 @view_config(route_name='actualizar_pedido', renderer='json', request_method='PUT')
-def actualizar_pedidos(request):
+def actualizar_pedidos(context, request):
     pedido_id = request.matchdict.get('id')
     try:
         data = request.json_body
@@ -54,12 +54,20 @@ def actualizar_pedidos(request):
     
 
 @view_config(route_name='eliminar_pedido', renderer='json', request_method='DELETE')
-def eliminar_pedidos(request):
+def eliminar_pedidos(context, request):
     pedido_id = request.matchdict.get('id')
     service = OrderService(request.dbsession)
     pedido = service.eliminar_pedido(pedido_id)
     if not pedido:
         return HTTPNotFound(json_body={'error': 'Pedido no encontrado'})
-    # Usa la función auxiliar para serializar el pedido
-    return HTTPOk(json_body={'message': 'Pedido eliminado', 
-                             'Pedido': serialize_sqlalchemy_object(pedido)})
+
+    # Serializa manualmente el pedido eliminado
+    pedido_dict = {
+        'id': pedido.id,
+        'usuario_id': pedido.usuario_id,
+        'total': float(pedido.total),
+        'estado': pedido.estado,
+        'fecha_pedido': pedido.fecha_pedido.isoformat() if pedido.fecha_pedido else None
+    }
+
+    return HTTPOk(json_body={'message': 'Pedido eliminado', 'Pedido': pedido_dict})

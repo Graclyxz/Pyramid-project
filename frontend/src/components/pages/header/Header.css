@@ -45,3 +45,22 @@
 .btn-logout:hover {
     background-color: #0056b3;
 }
+
+/* Contenedor del enlace "Mis Pedidos" */
+.nav-item-orders {
+    position: relative;
+}
+
+/* Ícono de carrito */
+.icon-carrito {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: #4caf50;
+    /* Color verde */
+    border-radius: 50%;
+    /* Forma circular */
+    margin-right: 8px;
+    /* Espaciado a la izquierda del texto */
+    vertical-align: middle;
+}
