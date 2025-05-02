@@ -41,5 +41,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:6543"
+  "proxy": "https://pyramid-project-backend.onrender.com"
 }
