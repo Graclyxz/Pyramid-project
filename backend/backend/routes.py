@@ -1,3 +1,6 @@
+from requests import Response
+
+
 def includeme(config):
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('home', '/')
@@ -31,3 +34,9 @@ def includeme(config):
 
     config.add_route('test_db_connection', '/test-db-connection')  # Nueva ruta
     config.add_route('me', '/me')
+
+    # Define la ruta cors_preflight
+    config.add_route('cors_preflight', '/cors-preflight')
+
+    # Ruta global para manejar OPTIONS
+    config.add_view(lambda request: Response(status=200), route_name='cors_preflight', request_method='OPTIONS')

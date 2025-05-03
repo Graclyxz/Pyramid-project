@@ -4,6 +4,8 @@ import axios from 'axios';
 import './Home.css';
 import { UserContext } from '../../../context/UserContext';
 
+const BASE_URL = process.env.REACT_APP_BACKEND_URL || '';
+
 function Home() {
     const [productos, setProductos] = useState([]);
     const [pedidoActivo, setPedidoActivo] = useState(null); // Pedido activo
@@ -14,14 +16,22 @@ function Home() {
 
     useEffect(() => {
         // Llama al backend para obtener los productos
-        axios.get('/productos')
+        axios.get(`${BASE_URL}/productos`)
             .then(response => {
-                setProductos(response.data);
+                if (Array.isArray(response.data)) {
+                    setProductos(response.data);
+                } else {
+                    console.error('La respuesta no es un arreglo:', response.data);
+                    setProductos([]);
+                }
             })
             .catch(error => {
                 console.error('Error al cargar los productos:', error);
+                setProductos([]);
             });
+    }, []);
 
+    useEffect(() => {
         // Verifica si hay un pedido activo
         if (user) {
             axios.get('/pedidos', {
@@ -92,7 +102,7 @@ function Home() {
                 </div>
             )}
             <div className="productos-grid">
-                {productos.map(producto => (
+                {Array.isArray(productos) && productos.map(producto => (
                     <div key={producto.id} className="producto-card">
                         <img src={producto.imagen} alt={producto.nombre} className="producto-imagen" />
                         <h2>{producto.nombre}</h2>

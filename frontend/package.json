@@ -18,7 +18,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start --host 0.0.0.0 --disable-host-check",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -41,5 +41,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://pyramid-project-backend.onrender.com"
+  "proxy": "https://pyramid-project-backend.onrender.com",
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
 }
