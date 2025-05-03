@@ -1,5 +1,4 @@
-from pyramid.response import Response
-
+from backend.views import options_view
 
 def includeme(config):
     config.add_static_view('static', 'static', cache_max_age=3600)
@@ -35,5 +34,5 @@ def includeme(config):
     config.add_route('test_db_connection', '/test-db-connection')  # Nueva ruta
     config.add_route('me', '/me')
 
-    # Define la ruta para manejar preflight CORS
-    config.add_view(lambda request: Response(status=200), request_method='OPTIONS')
+
+    config.add_view(options_view.options_view, route_name='options', renderer='json')
