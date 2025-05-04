@@ -31,7 +31,7 @@ def includeme(config):
     config.add_route('login', '/login')
     config.add_route('logout', '/logout')
 
-    config.add_route('test_db_connection', '/test-db-connection')  # Nueva ruta
+    config.add_route('test_db_connection', '/test-db-connection')
     config.add_route('me', '/me')
 
     config.add_route('options', '*path', request_method='OPTIONS')

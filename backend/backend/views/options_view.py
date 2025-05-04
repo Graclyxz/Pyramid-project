@@ -1,3 +1,4 @@
+import json
 from pyramid.view import view_config
 from pyramid.response import Response
 from pyramid.security import Allow, Everyone
@@ -7,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 @view_config(route_name='options', request_method='OPTIONS')
 def options_view(request):
-    logger.info("Solicitud OPTIONS recibida")
+    print("Solicitud OPTIONS recibida")
     headers = {
         'Access-Control-Allow-Origin': 'http://localhost:3000, https://pyramid-project-frontend.onrender.com',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
@@ -24,6 +25,16 @@ def add_cors_headers(event):
         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
         'Access-Control-Allow-Credentials': 'true',
     })
+
+def create_response(data, status_code):
+    response = Response(json.dumps(data), content_type="application/json; charset=utf-8", status=status_code)
+    response.headers.update({
+        "Access-Control-Allow-Origin": "http://localhost:3000, https://pyramid-project-frontend.onrender.com",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true"
+    })
+    return response
 
 def includeme(config):
     config.add_subscriber(add_cors_headers, 'pyramid.events.NewResponse')
