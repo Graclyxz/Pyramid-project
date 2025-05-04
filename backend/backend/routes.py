@@ -34,5 +34,6 @@ def includeme(config):
     config.add_route('test_db_connection', '/test-db-connection')  # Nueva ruta
     config.add_route('me', '/me')
 
+    config.add_route('options', '*path', request_method='OPTIONS')
 
     config.add_view(options_view.options_view, route_name='options', renderer='json')
