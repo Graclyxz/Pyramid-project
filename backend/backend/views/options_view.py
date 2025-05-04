@@ -9,7 +9,6 @@ logger = logging.getLogger(__name__)
 def options_view(request):
     origin = request.headers.get('Origin')
     allowed_origins = [
-        "http://localhost:3000",
         "https://pyramid-project-frontend.onrender.com"
     ]
     if origin in allowed_origins:
@@ -25,7 +24,6 @@ def options_view(request):
 def create_response(request, data, status_code):
     origin = request.headers.get('Origin')
     allowed_origins = [
-        "http://localhost:3000",
         "https://pyramid-project-frontend.onrender.com"
     ]
     headers = {}
