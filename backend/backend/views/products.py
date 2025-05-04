@@ -20,7 +20,7 @@ def obtener_productos(request):
     service = ProductService(request.dbsession)
     producto = service.obtener_producto(producto_id)
     if not producto:
-        return HTTPNotFound(json_body={'error': 'Producto no encontrado'})
+        return create_response (HTTPNotFound(json_body={'error': 'Producto no encontrado'}))
     
     return create_response (serialize_sqlalchemy_object(producto))
 
