@@ -21,19 +21,12 @@ def options_view(request):
         return Response(status=200, headers=headers)
     return Response(status=403, json_body={'error': 'Origin not allowed'})
 
-def create_response(request, data, status_code):
-    origin = request.headers.get('Origin')
-    allowed_origins = [
-        "https://pyramid-project-frontend.onrender.com"
-    ]
-    headers = {}
-    if origin in allowed_origins:
-        headers = {
-            "Access-Control-Allow-Origin": origin,
-            "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type, Authorization",
-            "Access-Control-Allow-Credentials": "true"
-        }
+def create_response(data, status_code):
     response = Response(json.dumps(data), content_type="application/json; charset=utf-8", status=status_code)
-    response.headers.update(headers)
+    response.headers.update({
+        "Access-Control-Allow-Origin": "https://pyramid-project-frontend.onrender.com",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true"
+    })
     return response

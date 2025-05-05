@@ -12,7 +12,7 @@ def listar_productos(request):
     print(f"Origin: {request.headers.get('Origin')}")
     service = ProductService(request.dbsession)
     productos = service.listar_productos()
-    return create_response(request, [serialize_sqlalchemy_object(producto) for producto in productos])
+    return create_response([serialize_sqlalchemy_object(producto) for producto in productos], 200)
 
 
 @view_config(route_name='obtener_producto', renderer='json', request_method='GET')
@@ -21,9 +21,9 @@ def obtener_productos(request):
     service = ProductService(request.dbsession)
     producto = service.obtener_producto(producto_id)
     if not producto:
-        return create_response(request, HTTPNotFound(json_body={'error': 'Producto no encontrado'}))
+        return create_response(HTTPNotFound(json_body={'error': 'Producto no encontrado'}), 404)
     
-    return create_response(request, serialize_sqlalchemy_object(producto))
+    return create_response(serialize_sqlalchemy_object(producto), 200)
 
 
 @view_config(route_name='crear_producto', renderer='json', request_method='POST')
