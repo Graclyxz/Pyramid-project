@@ -34,7 +34,7 @@ function Home() {
     useEffect(() => {
         // Verifica si hay un pedido activo
         if (user) {
-            axios.get('/pedidos', {
+            axios.get(`${BASE_URL}/pedidos`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
             }).then(response => {
                 const pedidoPendiente = response.data.find(pedido => pedido.estado === 'pendiente');
@@ -58,7 +58,7 @@ function Home() {
 
             // Si no hay un pedido activo, crea uno
             if (!pedidoActivo) {
-                const nuevoPedido = await axios.post('/create/pedidos', {
+                const nuevoPedido = await axios.post(`${BASE_URL}/create/pedidos`, {
                     usuario_id: user.id,
                     total: 0,
                     estado: 'pendiente',
@@ -70,7 +70,7 @@ function Home() {
             }
 
             // Añade el producto al pedido activo
-            await axios.post('/create/detalles_pedido', {
+            await axios.post(`${BASE_URL}/create/detalles_pedido`, {
                 pedido_id: pedidoId,
                 producto_id: producto.id,
                 cantidad: 1,

@@ -5,27 +5,11 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-@view_config(route_name='options', request_method='OPTIONS')
-def options_view(request):
-    origin = request.headers.get('Origin')
-    allowed_origins = [
-        "https://pyramid-project-frontend.onrender.com"
-    ]
-    if origin in allowed_origins:
-        headers = {
-            'Access-Control-Allow-Origin': origin,
-            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            'Access-Control-Allow-Credentials': 'true',
-        }
-        return Response(status=200, headers=headers)
-    return Response(status=403, json_body={'error': 'Origin not allowed'})
-
 def create_response(data, status_code):
     response = Response(json.dumps(data), content_type="application/json; charset=utf-8", status=status_code)
     response.headers.update({
         "Access-Control-Allow-Origin": "https://pyramid-project-frontend.onrender.com",
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type, Authorization",
         "Access-Control-Allow-Credentials": "true"
     })

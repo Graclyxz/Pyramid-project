@@ -4,6 +4,8 @@ import './Header.css';
 import { UserContext } from '../../../context/UserContext';
 import axios from 'axios';
 
+const BASE_URL = process.env.REACT_APP_BACKEND_URL || '';
+
 function Header() {
     const { user, setUser } = useContext(UserContext);
     const [isPedidoPendiente, setisPedidoPendiente] = useState(false);
@@ -11,7 +13,7 @@ function Header() {
 
     useEffect(() => {
         if (user) {
-            axios.get('/pedidos', {
+            axios.get(`${BASE_URL}/pedidos`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
             })
                 .then(response => {

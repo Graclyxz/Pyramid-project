@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Profile.css';
 
+const BASE_URL = process.env.REACT_APP_BACKEND_URL || '';
+
 function Profile() {
     const [userData, setUserData] = useState({
         nombre: '',
@@ -14,7 +16,7 @@ function Profile() {
 
     useEffect(() => {
         // Llama al backend para obtener los datos del usuario autenticado
-        axios.get('/me', {
+        axios.get(`${BASE_URL}/me`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`, // Asegúrate de enviar el token
             },
@@ -43,7 +45,7 @@ function Profile() {
             const userId = userData.id;
 
             // Envía la solicitud PUT al backend con la URL correcta y el token
-            const response = await axios.put(`/update/usuarios/${userId}`, userData, {
+            const response = await axios.put(`${BASE_URL}/update/usuarios/${userId}`, userData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`, // Envía el token JWT
                 },

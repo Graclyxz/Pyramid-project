@@ -1,4 +1,5 @@
 from backend.views import options_view
+from pyramid.response import Response
 
 def includeme(config):
     config.add_static_view('static', 'static', cache_max_age=3600)
@@ -34,6 +35,13 @@ def includeme(config):
     config.add_route('test_db_connection', '/test-db-connection')
     config.add_route('me', '/me')
 
-    config.add_route('options', '*path', request_method='OPTIONS')
+    # Define la ruta para manejar solicitudes OPTIONS
+    config.add_route('options', '/options')
 
-    config.add_view(options_view.options_view, route_name='options', renderer='json')
+    # Maneja solicitudes OPTIONS globalmente
+    config.add_view(lambda request: Response(status=200, headers={
+        'Access-Control-Allow-Origin': request.headers.get('Origin', '*'),
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Credentials': 'true',
+    }), route_name='options', request_method='OPTIONS')

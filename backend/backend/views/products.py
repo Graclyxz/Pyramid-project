@@ -21,9 +21,9 @@ def obtener_productos(request):
     service = ProductService(request.dbsession)
     producto = service.obtener_producto(producto_id)
     if not producto:
-        return create_response(HTTPNotFound(json_body={'error': 'Producto no encontrado'}), 404)
+        return create_response({'error': 'Producto no encontrado'}, 404)
     
-    return create_response(serialize_sqlalchemy_object(producto), 200)
+    return serialize_sqlalchemy_object(producto)
 
 
 @view_config(route_name='crear_producto', renderer='json', request_method='POST')
@@ -34,9 +34,9 @@ def crear_productos(context, request):
         data = request.json_body
         service = ProductService(request.dbsession)
         producto = service.crear_producto(data)
-        return serialize_sqlalchemy_object(producto)
+        return create_response(serialize_sqlalchemy_object(producto), 200)
     except Exception as e:
-        return HTTPBadRequest(json_body={"error": str(e)})
+        return create_response({"error": str(e)}, 404)
     
 
 @view_config(route_name='actualizar_producto', renderer='json', request_method='PUT')
@@ -49,11 +49,11 @@ def actualizar_productos(context, request):
         service = ProductService(request.dbsession)
         producto = service.actualizar_producto(producto_id, data)
         if not producto:
-            return HTTPNotFound(json_body={'error': 'Producto no encontrado'})
+            return create_response({'error': 'Producto no encontrado'}, 404)
         
-        return serialize_sqlalchemy_object(producto)
+        return create_response(serialize_sqlalchemy_object(producto), 200)
     except Exception as e:
-        return HTTPBadRequest(json_body={'error': str(e)})
+        return create_response({'error': str(e)}, 404)
     
 
 @view_config(route_name='eliminar_producto', renderer='json', request_method='DELETE')
@@ -64,7 +64,7 @@ def eliminar_productos(context, request):
     service = ProductService(request.dbsession)
     producto = service.eliminar_producto(producto_id)
     if not producto:
-        return HTTPNotFound(json_body={'error': 'Producto no encontrado'})
+        return create_response({'error': 'Producto no encontrado'}, 404)
     
-    return HTTPOk(json_body={'message': 'Producto eliminado', 
-                             'Producto': serialize_sqlalchemy_object(producto)})
+    return create_response({'message': 'Producto eliminado', 
+                             'Producto': serialize_sqlalchemy_object(producto)}, 200)

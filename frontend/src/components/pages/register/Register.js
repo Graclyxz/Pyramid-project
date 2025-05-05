@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'; // Importa useNavigate para redi
 import axios from 'axios';
 import './Register.css';
 
+const BASE_URL = process.env.REACT_APP_BACKEND_URL || '';
+
 function Register() {
     const [formData, setFormData] = useState({
         nombre: '',
@@ -26,7 +28,7 @@ function Register() {
         setSuccess(false);
 
         try {
-            const response = await axios.post('/create/usuarios', formData);
+            const response = await axios.post(`${BASE_URL}/create/usuarios`, formData);
             console.log('Registro exitoso:', response.data);
             setSuccess(true); // Muestra el modal de éxito
             setFormData({

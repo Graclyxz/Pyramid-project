@@ -4,6 +4,8 @@ import axios from 'axios';
 import './Login.css';
 import { UserContext } from '../../../context/UserContext';
 
+const BASE_URL = process.env.REACT_APP_BACKEND_URL || '';
+
 function Login() {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [error, setError] = useState('');
@@ -21,14 +23,14 @@ function Login() {
 
         try {
             // Solicita el token al iniciar sesión
-            const loginResponse = await axios.post('/login', formData);
+            const loginResponse = await axios.post(`${BASE_URL}/login`, formData);
             const { token } = loginResponse.data;
 
             // Guarda el token en localStorage
             localStorage.setItem('token', token);
 
             // Usa el token para obtener los datos del usuario
-            const userResponse = await axios.get('/me', {
+            const userResponse = await axios.get(`${BASE_URL}/me`, {
                 headers: {
                     Authorization: `Bearer ${token}`, // Envía el token en los encabezados
                 },
