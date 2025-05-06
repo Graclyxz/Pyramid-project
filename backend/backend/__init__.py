@@ -7,7 +7,7 @@ def add_cors_tween(handler, registry):
         if request.method == 'OPTIONS':
             origin = request.headers.get('Origin')
             allowed_origins = [
-                "https://pyramid-project-frontend.onrender.com"
+                "http://localhost:3000"
             ]
             if origin in allowed_origins:
                 headers = {

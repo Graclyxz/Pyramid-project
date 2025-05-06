@@ -1,6 +1,22 @@
 # Pyramid-project
 Aplicacion web con varias tecnologias python: Backend>Pyramid, SQLalchymist y PostgreSQL; Frontend> React
 
+# Imagenes
+- Inicio
+![Imagen Home](gitImages/home.png)
+
+- Iniciar Sesion
+![Imagen Iniciar sesion](gitImages/IniciarSesion.png)
+
+- Perfil de usuario
+![Imagen Iniciar sesion](gitImages/perfil.png)
+
+- Pedidos
+![Imagen Iniciar sesion](gitImages/pedidos.png)
+
+- Detalle de los pedidos
+![Imagen Iniciar sesion](gitImages/detallePedidos.png)
+
 # Modelos
 1. Modelo Entidad-Relación (ER) para la base de datos.
 
@@ -77,7 +93,9 @@ Aplicacion web con varias tecnologias python: Backend>Pyramid, SQLalchymist y Po
 - Estilos: CSS
 
 ## Iniciar Backend
+- pip install -r requirements.txt
 - initialize_backend_db development.ini
+- alembic -c development.ini upgrade head
 - pserve development.ini
 
 ## Instalación del Backend
