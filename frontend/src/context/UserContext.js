@@ -1,6 +1,8 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
+const BASE_URL = process.env.REACT_APP_BACKEND_URL || '';
+
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
@@ -11,7 +13,7 @@ export const UserProvider = ({ children }) => {
         if (token) {
             // Intenta obtener los datos del usuario con el token
             axios
-                .get('/me', {
+                .get(`${BASE_URL}/me`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

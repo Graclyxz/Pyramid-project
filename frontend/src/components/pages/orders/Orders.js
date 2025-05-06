@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Orders.css';
 
+const BASE_URL = process.env.REACT_APP_BACKEND_URL || '';
+
 function Orders() {
     const [pedidosPendientes, setPedidosPendientes] = useState([]);
     const [pedidosEnviados, setPedidosEnviados] = useState([]);
@@ -12,7 +14,7 @@ function Orders() {
     const [isPedidoPendiente, setIsPedidoPendiente] = useState(false); // Nuevo estado para verificar si el pedido es pendiente
 
     useEffect(() => {
-        axios.get('/pedidos', {
+        axios.get(`${BASE_URL}/pedidos`, {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         })
             .then(response => {
@@ -26,7 +28,7 @@ function Orders() {
     }, []);
 
     const handleVerDetalles = (pedidoId) => {
-        axios.get(`/detalles_pedido?pedido_id=${pedidoId}`, {
+        axios.get(`${BASE_URL}/detalles_pedido?pedido_id=${pedidoId}`, {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         })
             .then(response => {
@@ -43,7 +45,7 @@ function Orders() {
 
     const handleEnviarPedido = async (pedidoId) => {
         try {
-            await axios.put(`/update/pedidos/${pedidoId}`, {
+            await axios.put(`${BASE_URL}/update/pedidos/${pedidoId}`, {
                 estado: 'enviado',
             }, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
@@ -62,7 +64,7 @@ function Orders() {
 
     const handleEliminarProducto = async (detalleId) => {
         try {
-            await axios.delete(`/delete/detalles_pedido/${detalleId}`, {
+            await axios.delete(`${BASE_URL}/delete/detalles_pedido/${detalleId}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
             });
 
@@ -75,7 +77,7 @@ function Orders() {
 
     const handleEliminarPedido = async (pedidoId) => {
         try {
-            await axios.delete(`/delete/pedidos/${pedidoId}`, {
+            await axios.delete(`${BASE_URL}/delete/pedidos/${pedidoId}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
             });
 
