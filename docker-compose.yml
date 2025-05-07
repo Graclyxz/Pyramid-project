@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "6543:6543"
+    environment:
+      - DATABASE_URL=postgresql://xavier:4Ng71TBxcu2hCC6Yd6g4FUOuVSwLIbNf@dpg-d0a01o9r0fns73duj630-a.oregon-postgres.render.com/pyramid_project_f4lm
+    depends_on:
+      - frontend
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_BACKEND_URL=http://backend:6543
