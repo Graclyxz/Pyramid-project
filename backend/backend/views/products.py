@@ -23,7 +23,7 @@ def obtener_productos(request):
     if not producto:
         return create_response({'error': 'Producto no encontrado'}, 404)
     
-    return serialize_sqlalchemy_object(producto)
+    return create_response(serialize_sqlalchemy_object(producto), 200)
 
 
 @view_config(route_name='crear_producto', renderer='json', request_method='POST')

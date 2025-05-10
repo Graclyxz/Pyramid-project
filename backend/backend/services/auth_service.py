@@ -13,7 +13,7 @@ class AuthService:
 
     def autenticar_usuario(self, email, password):
         usuario = self.dbsession.query(Usuario).filter(Usuario.email == email).first()
-        if usuario and usuario.password == password:  # Asegúrate de usar un hash seguro para las contraseñas
+        if usuario and usuario.password == password: 
             return usuario
         return None
 
